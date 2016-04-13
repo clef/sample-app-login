@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="app_login" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R24-yh-3b9">
+                                <rect key="frame" x="106" y="369" width="389" height="74"/>
+                                <state key="normal" title="Log in with Clef"/>
+                                <connections>
+                                    <action selector="onClefButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gwU-3z-sca"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cay-dY-hUp">
+                                <rect key="frame" x="20" y="131" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="R24-yh-3b9" secondAttribute="bottom" constant="157" id="12X-T4-RCR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cay-dY-hUp" secondAttribute="trailing" id="AYt-wz-Mg6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="R24-yh-3b9" secondAttribute="trailing" constant="85" id="BAl-NE-voJ"/>
+                            <constraint firstItem="cay-dY-hUp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="111" id="GMZ-JO-6Z4"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cay-dY-hUp" secondAttribute="bottom" constant="448" id="Vly-sa-IBT"/>
+                            <constraint firstItem="cay-dY-hUp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="WWT-x0-h4X"/>
+                            <constraint firstItem="R24-yh-3b9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="349" id="kaH-9S-Rvs"/>
+                            <constraint firstItem="R24-yh-3b9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="86" id="nQT-Tr-nRz"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logInWithClefButton" destination="R24-yh-3b9" id="2SS-vU-bRq"/>
+                        <outlet property="loggedInLabel" destination="cay-dY-hUp" id="4AU-51-Yda"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="429"/>
+        </scene>
+    </scenes>
+</document>
