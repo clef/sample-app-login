@@ -15,9 +15,7 @@ Login with Clef in your iOS application works similarly to Login with Clef on th
 
 In this example, we just pass back the `clef_id`, but for a real application this should be replaced with the authentication token necessary to authenticate the app for future web requests.
 
-### Warning
-
-Please do not implement the OAuth handshake in your iOS application code. To do this would require compiling your Clef application secret into your iOS app, essentially making it public. By handling all authentication logic in a `UIWebView` on the server, we don't leak configuration or secrets into the client.
+_*Warning*: do not implement the OAuth handshake in your iOS application code. To do this would require compiling your Clef application secret into your iOS app, essentially making it public. By handling all authentication logic in a `UIWebView` on the server, we don't leak configuration or secrets into the client._
 
 ## Setup
 
