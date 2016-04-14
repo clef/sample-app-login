@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import WebKit
 
-class WebViewBridge : NSObject, UIWebViewDelegate {
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if (navigationType == UIWebViewNavigationType.Other) {
-            let url = request.URL!
+
+
+class WebViewBridge : NSObject, WKNavigationDelegate, WKUIDelegate {
+    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        let type = navigationAction.navigationType
+        if (type == WKNavigationType.Other) {
+            let url = navigationAction.request.URL!
+            
             if (url.scheme == "message") {
                 if let message = self.processEncodedMessage(url.host!) {
                     NSNotificationCenter.defaultCenter().postNotification(NSNotification(
@@ -21,11 +26,24 @@ class WebViewBridge : NSObject, UIWebViewDelegate {
                         ))
                 }
                 
-                return false
+                return decisionHandler(WKNavigationActionPolicy.Cancel)
+            }
+            
+            if (url.scheme == "clef" || url.host! == "clef.io") {
+                UIApplication.sharedApplication().openURL(url)
+                return decisionHandler(WKNavigationActionPolicy.Cancel)
             }
         }
         
-        return true
+        return decisionHandler(WKNavigationActionPolicy.Allow)
+    }
+
+    func webView(webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
+        return completionHandler()
+    }
+    
+    func webView(webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
+        return completionHandler(true)
     }
     
     func processEncodedMessage(message: String) -> [String:AnyObject]? {

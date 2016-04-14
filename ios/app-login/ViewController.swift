@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import WebKit
 
 
 class ViewController: UIViewController {
 
-    var clefWebView: UIWebView!
+    var clefWebView: WKWebView!
     
     let webViewDelegate = WebViewBridge()
     
@@ -21,12 +22,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.clefWebView = UIWebView(frame: CGRectMake(0, 0, 0, 0))
-        self.clefWebView.delegate = self.webViewDelegate
-        self.view.addSubview(self.clefWebView)
+        self.setupWebview()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleClefAuthenticationCallback), name: ClefAuthenticationCallback, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleClefAuthenticationVerify), name: ClefAuthenticationVerify, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleClefAuthenticationSuccess), name: ClefAuthenticationSuccess, object: nil)
+    }
+    
+    func setupWebview() {
+        let configuration = WKWebViewConfiguration()
+        self.clefWebView = WKWebView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), configuration: configuration)
+        self.clefWebView.navigationDelegate = self.webViewDelegate
+        self.clefWebView.UIDelegate = self.webViewDelegate
+        self.view.addSubview(self.clefWebView)
     }
     
     @IBAction func onClefButtonTap(sender: UIButton) {
@@ -40,6 +48,12 @@ class ViewController: UIViewController {
         self.clefWebView.loadRequest(NSURLRequest(URL: url))
     }
     
+    func handleClefAuthenticationVerify(notification: NSNotification) {
+        let verifyURL = notification.userInfo!["url"] as! NSURL
+        let url = NSURL(string: ServerHost +  "/clef/verify?" + verifyURL.query!)!
+        self.clefWebView.loadRequest(NSURLRequest(URL: url))
+    }
+    
     func handleClefAuthenticationSuccess(notification: NSNotification) {
         self.clefWebView.removeFromSuperview()
         self.logInWithClefButton.hidden = true
@@ -49,7 +63,3 @@ class ViewController: UIViewController {
         self.loggedInLabel.hidden = false
     }
 }
-
-extension ViewController {
-}
-

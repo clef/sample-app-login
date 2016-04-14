@@ -1,6 +1,7 @@
 <?php
 
 define('__BASE_DIR', dirname(__DIR__) . '/');
+date_default_timezone_set('America/Los_Angeles');
 
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
