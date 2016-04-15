@@ -20,13 +20,14 @@ class Clef : NSObject {
     static let sharedInstance = Clef()
     
     var authenticationWebView: WKWebView?
-    let authenticationWebViewDelegate: ClefWKWebViewDelegate = ClefWKWebViewDelegate()
+    var authenticationWebViewDelegate: ClefWKWebViewDelegate?
     var onSuccess: ((data: [String:AnyObject]?) -> Void)?
     
     var configured: Bool = false
     var startURL: NSURL!
     var callbackURL: NSURL!
-    var verifyURL: NSURL!
+    var verifyURL: NSURL?
+    var isDistributedAuth: Bool = false
     
     override init() {
         super.init()
@@ -36,11 +37,13 @@ class Clef : NSObject {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleSuccess), name: ClefAuthenticationEvent.Success, object: nil)
     }
     
-    func configure(startURL startURL: NSURL, callbackURL: NSURL, verifyURL: NSURL) {
+    func configure(startURL startURL: NSURL, callbackURL: NSURL, verifyURL: NSURL? = nil) {
         self.configured = true
         self.startURL = startURL
         self.callbackURL = callbackURL
         self.verifyURL = verifyURL
+        self.isDistributedAuth = self.verifyURL != nil
+        self.authenticationWebViewDelegate = ClefWKWebViewDelegate(isDistributedAuth: self.isDistributedAuth)
     }
     
     func handleDeepLink(openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Void {
@@ -97,7 +100,7 @@ class Clef : NSObject {
     
     func handleVerify(notification: NSNotification) {
         if let authenticationWebView = self.authenticationWebView {
-            authenticationWebView.loadRequest(NSURLRequest(URL: self.mergeURLs(self.verifyURL, urlToTakeQueryFrom: notification.userInfo!["url"] as! NSURL)))
+            authenticationWebView.loadRequest(NSURLRequest(URL: self.mergeURLs(self.verifyURL!, urlToTakeQueryFrom: notification.userInfo!["url"] as! NSURL)))
         }
     }
     
@@ -136,6 +139,13 @@ class Clef : NSObject {
 }
 
 class ClefWKWebViewDelegate : NSObject, WKNavigationDelegate, WKUIDelegate {
+    var isDistributedAuth: Bool!
+    
+    init(isDistributedAuth: Bool = false) {
+        super.init()
+        self.isDistributedAuth = isDistributedAuth
+    }
+    
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         if (navigationAction.navigationType == WKNavigationType.Other) {
             let url = navigationAction.request.URL!
@@ -152,7 +162,7 @@ class ClefWKWebViewDelegate : NSObject, WKNavigationDelegate, WKUIDelegate {
                 return decisionHandler(WKNavigationActionPolicy.Cancel)
             }
             
-            if (url.scheme == "clef" || url.host! == "arya.clef.dev") {
+            if (url.scheme == "clef" || (self.isDistributedAuth && url.host! == "clef.io")) {
                 UIApplication.sharedApplication().openURL(url)
                 return decisionHandler(WKNavigationActionPolicy.Cancel)
             }
