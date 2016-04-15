@@ -9,7 +9,3 @@
 import Foundation
 
 let ServerHost = "http://localhost:8080"
-
-let ClefAuthenticationCallback = "clef.callback"
-let ClefAuthenticationVerify = "clef.verify"
-let ClefAuthenticationSuccess = "clef.success"

@@ -15,36 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Clef.sharedInstance.configure(
+            startURL: NSURL(string: "http://localhost:8080/clef/start")!,
+            callbackURL: NSURL(string: "http://localhost:8080/clef/callback")!,
+            verifyURL: NSURL(string: "http://localhost:8080/clef/verify")!
+        )
         return true
     }
 
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        if let host = url.host {
-            if (host == "clef") {
-                let components = url.pathComponents!
-                let name: String
-                
-                switch (components[1]) {
-                case "callback":
-                    name = ClefAuthenticationCallback
-                    break
-                case "verify":
-                    name = ClefAuthenticationVerify
-                    break
-                default:
-                    return true
-                }
-                
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(
-                    name: name,
-                    object: self,
-                    userInfo: [
-                        "url": url
-                    ]
-                ))
-            }
-        }
-        
+        Clef.sharedInstance.handleDeepLink(openURL: url, sourceApplication: sourceApplication, annotation: annotation)
         return true
     }
 }

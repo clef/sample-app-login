@@ -15,7 +15,7 @@
 		6ED5A50D1CBDA7C80042C946 /* app_loginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED5A50C1CBDA7C80042C946 /* app_loginTests.swift */; };
 		6ED5A5181CBDA7C80042C946 /* app_loginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED5A5171CBDA7C80042C946 /* app_loginUITests.swift */; };
 		6ED5A5261CBDCE470042C946 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED5A5251CBDCE470042C946 /* Constants.swift */; };
-		6ED5A5281CBDCF4B0042C946 /* WebViewBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED5A5271CBDCF4B0042C946 /* WebViewBridge.swift */; };
+		6ED5A5281CBDCF4B0042C946 /* Clef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED5A5271CBDCF4B0042C946 /* Clef.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,7 @@
 		6ED5A5171CBDA7C80042C946 /* app_loginUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = app_loginUITests.swift; sourceTree = "<group>"; };
 		6ED5A5191CBDA7C80042C946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6ED5A5251CBDCE470042C946 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		6ED5A5271CBDCF4B0042C946 /* WebViewBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewBridge.swift; sourceTree = "<group>"; };
+		6ED5A5271CBDCF4B0042C946 /* Clef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clef.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +104,7 @@
 				6ED5A5251CBDCE470042C946 /* Constants.swift */,
 				6ED5A4F71CBDA7C80042C946 /* AppDelegate.swift */,
 				6ED5A4F91CBDA7C80042C946 /* ViewController.swift */,
-				6ED5A5271CBDCF4B0042C946 /* WebViewBridge.swift */,
+				6ED5A5271CBDCF4B0042C946 /* Clef.swift */,
 				6ED5A4FB1CBDA7C80042C946 /* Main.storyboard */,
 				6ED5A4FE1CBDA7C80042C946 /* Assets.xcassets */,
 				6ED5A5001CBDA7C80042C946 /* LaunchScreen.storyboard */,
@@ -262,7 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6ED5A5281CBDCF4B0042C946 /* WebViewBridge.swift in Sources */,
+				6ED5A5281CBDCF4B0042C946 /* Clef.swift in Sources */,
 				6ED5A4FA1CBDA7C80042C946 /* ViewController.swift in Sources */,
 				6ED5A4F81CBDA7C80042C946 /* AppDelegate.swift in Sources */,
 				6ED5A5261CBDCE470042C946 /* Constants.swift in Sources */,
@@ -492,6 +492,7 @@
 				6ED5A51E1CBDA7C80042C946 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6ED5A51F1CBDA7C80042C946 /* Build configuration list for PBXNativeTarget "app-loginTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +501,7 @@
 				6ED5A5211CBDA7C80042C946 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6ED5A5221CBDA7C80042C946 /* Build configuration list for PBXNativeTarget "app-loginUITests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +510,7 @@
 				6ED5A5241CBDA7C80042C946 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
