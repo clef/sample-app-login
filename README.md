@@ -32,7 +32,23 @@ To allow login with Clef to work in your app, you'll need to add a custom URL sc
 
 #### iOS Application
 
-For the iOS application, you'll need to open [ios/app-login.xcodeproj](ios/app-login.xcodeproj) in Xcode. Once you've opened the project, you should be able to run it.
+For the iOS application, you'll need to open [ios/app-login.xcodeproj](ios/app-login.xcodeproj) in Xcode. 
+
+Once you've opened the project, you'll need to configure your app to support the custom URL scheme you added to your Integration Application Domain settings above. To do this, add the following XML to your `Info.plist`.
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+        <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                        <string>clefapp</string>
+                </array>
+        </dict>
+</array>
+```
+
+After you've added that configuration, you should be able to run your app and do the full login.
 
 #### Server
 
