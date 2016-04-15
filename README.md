@@ -64,7 +64,11 @@ $ php -S localhost:8080 -t ./public/
 
 # Using Clef.swift
 
-`Clef.swift` is a library that makes doing Clef authentication in an iOS app easy. To use it, you'll need to do four things.
+`Clef.swift` is a library that makes doing Clef authentication in an iOS app easy. To use it, you'll need to do follow these steps.
+
+## Setup your iOS app and Clef integration
+
+Add a custom URL scheme to your app and Integration Application Domain like `example://clef` as described above.
 
 ## Configure
 
@@ -107,9 +111,19 @@ To start the Clef authentication flow, you will need to call `Clef.sharedInstanc
 
 ## Setup your server
 
-On the server, you can reuse your OAuth and Distributed Auth handshake. The only difference is what you should do when a user is authenticated. Rather than authenticating the user into the web session, you'll need to pass a message back to the iOS library that can be used to authenticat the user in the app. This should likely be an API token. To do this, redirect to `message://<blob>` with a base64-encoded JSON object as `<blob>`. You can see an example of this (and the rest of the OAuth handshake) in [server/src/routes.php](https://github.com/clef/sample-app-login/blob/master/server/src/routes.php#L52).
+On the server, you can reuse much of your web OAuth and Distributed Auth handshake. There are a few mobile-specific tweaks you'll need to make.
 
+### Setup a `startURL`
 
+You can see an example of this [here](https://github.com/clef/sample-app-login/blob/master/server/src/routes.php#L4). Essentially, this is a URL that sets `state` in your session, then redirects to `https://clef.io/iframes/login`1 with your `app_id` and `redirect_url`.
+
+### Use your custom scheme for redirect URLs
+
+For your `redirect_url` for the OAuth handshake you should use `custom://clef/callback` (replace custom with your custom URL scheme of choice). For your `redirect_url` in Distributed Auth, you should use `custom://clef/verify` (replace custom with your custom URL scheme of choice).
+
+### Logging in an authenticated user
+
+Rather than authenticating the user into the web session, you'll need to pass a message back to the iOS library that can be used to authenticat the user in the app. This should likely be an API token. To do this, redirect to `message://<blob>` with a base64-encoded JSON object as `<blob>`. You can see an example of this (and the rest of the OAuth handshake) in [server/src/routes.php](https://github.com/clef/sample-app-login/blob/master/server/src/routes.php#L52).
 
 # Support
 
