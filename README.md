@@ -62,6 +62,55 @@ $ composer install
 $ php -S localhost:8080 -t ./public/
 ```
 
-## Support
+# Using Clef.swift
+
+`Clef.swift` is a library that makes doing Clef authentication in an iOS app easy. To use it, you'll need to do four things.
+
+## Configure
+
+Configure `Clef.swift` in the `didFinishLaunchingWithOptions` method on your `AppDelegate`.
+
+```swift
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    Clef.sharedInstance.configure(
+        startURL: NSURL(string: "http://localhost:8080/clef/start")!, // URL where you will initiate the Clef OAuth handshake on the server
+        callbackURL: NSURL(string: "http://localhost:8080/clef/callback")!, // URL where you will handle the Clef OAuth callback on the server
+        verifyURL: NSURL(string: "http://localhost:8080/clef/verify")! // (optional) URL where you handle Clef Distributed Auth verify callback on the server
+    )
+    return true
+}
+```
+
+## Handle Custom URL Schemes
+
+Next, you need to register the custom URL scheme handler. Do this in the `openURL` method on your `AppDelegate`.
+
+```swift
+func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+    Clef.sharedInstance.handleDeepLink(openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+    return true
+}
+```
+
+## Start the authentication flow
+
+To start the Clef authentication flow, you will need to call `Clef.sharedInstance.startAuthentication`. You should do this in a IBAction from a button "Log in with Clef" button.
+
+```swift
+@IBAction func onClefButtonTap(sender: UIButton) {
+    Clef.sharedInstance.startAuthentication(
+        self.view, // UIView that an invisible WKWebView can be inserted into. Use the UIView your button is in.
+        onSuccess: self.handleClefAuthenticationSuccess // Function that is called when a user successfully authenticates on your server.
+    )
+}
+```
+
+## Setup your server
+
+On the server, you can reuse your OAuth and Distributed Auth handshake. The only difference is what you should do when a user is authenticated. Rather than authenticating the user into the web session, you'll need to pass a message back to the iOS library that can be used to authenticat the user in the app. This should likely be an API token. To do this, redirect to `message://<blob>` with a base64-encoded JSON object as `<blob>`. You can see an example of this (and the rest of the OAuth handshake) in [server/src/routes.php](https://github.com/clef/sample-app-login/blob/master/server/src/routes.php#L52).
+
+
+
+# Support
 
 If you're working through an integration and have an issue, email us at [support@getclef.com](mailto:support@getclef.com) and we'll help you out.
