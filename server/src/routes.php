@@ -27,7 +27,7 @@ $app->get('/clef/callback', function ($request, $response, $args) {
     $api_response = $this->get('clef')->get_login_information($params['code']);
     $result = $api_response["info"];
 
-    if (isset($settings['is_distributed_auth_enabled'])) {
+    if (isset($settings['is_distributed_auth_enabled']) && $settings['is_distributed_auth_enabled']) {
         $payload = [
             "nonce" => bin2hex(openssl_random_pseudo_bytes(16)),
             "clef_id" => $result["id"],
