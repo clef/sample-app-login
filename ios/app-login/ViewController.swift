@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     }
     
     func handleClefAuthenticationSuccess(data: [String:AnyObject]?) {
+        self.logInWithClefButton.hidden = true
         self.loggedInLabel.text = String(format: "You are logged in with the clef ID: %d", data!["id"] as! Int)
         self.loggedInLabel.hidden = false
     }
