@@ -50,7 +50,7 @@ $app->get('/clef/callback', function ($request, $response, $args) {
     } else {
         # if the app isn't distributed auth enabled, we are good to go and can log
         # the user into the app.
-        $data = base64_encode(json_encode($api_response->info));
+        $data = base64_encode(json_encode($result));
         return $response->withRedirect("message://$data");
     }
 });
