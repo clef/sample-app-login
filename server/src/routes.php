@@ -19,8 +19,8 @@ $app->get('/clef/callback', function ($request, $response, $args) {
     if (!(isset($params['state']) && $this->get('clef')->validate_session_state_parameter($params['state']))) {
         $this->logger->error("bad state");
         return $response
-            ->withBody('Invalid state parameter')
-            ->withStatus(400);
+            ->withStatus(400)
+            ->write('Invalid state parameter');
     }
 
     $settings = $this->get('settings')->get('clef');
