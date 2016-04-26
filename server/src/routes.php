@@ -9,7 +9,8 @@ $app->get('/clef/start', function ($request, $response, $args) {
     $base = $settings['base'];
     $application_id = $settings['id'];
 
-    return $response->withRedirect("$base/iframes/login?app_id=$application_id&redirect_url=clefapp://clef/callback&state=$state");
+    $redirect_url = urlencode("clefapp://clef/callback?state=$state");
+    return $response->withRedirect("$base/iframes/login?app_id=$application_id&redirect_url=$redirect_url");
 });
 
 $app->get('/clef/callback', function ($request, $response, $args) {
